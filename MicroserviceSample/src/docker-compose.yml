@@ -1,0 +1,70 @@
+version: '3.4'
+
+services:
+  catalog.db:
+    container_name: shopping-mongo
+    restart: always
+    ports:
+        - "27017:27017"
+    volumes:
+        - C:\dockerimagedata\catalogmongo:C:\data\db
+    image: mongo:windowsservercore-1809
+  basket.db:
+    container_name: shopping-redis
+    restart: always
+    image: redis:alpine
+    volumes:
+        - C:\dockerimagedata\redis:/data
+        - C:\dockerimagedata\redis:/usr/local/etc/redis/redis.conf
+  agent:
+    image: portainer/agent
+    volumes:
+      - type: npipe
+        source: \\.\pipe\docker_engine
+        target: \\.\pipe\docker_engine
+      - type: bind
+        source: C:\dockerimagedata\portainer
+        target: C:\dockerimagedata\portainer
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.platform.os == windows]
+  portainer:
+    image: portainer/portainer-ce
+    ports:
+      - "9000:9000"
+      - "5011:8000"
+    volumes:
+      - portainer_data:C:\data
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+          - node.platform.os == windows  
+  catalog.api:
+    container_name: catalogapi
+    environment: 
+        - ASPNETCORE_ENVIORNMENT=Development
+        - "DatabaseSettings:ConnectionString=mongodb://catalog.db:27017"
+    depends_on:
+        - catalog.db
+    build:
+      context: .
+      dockerfile: Services\Catalog\Catalog.API\Dockerfile
+    ports:
+      - "6002:80"
+  basket.api:
+    container_name: basketapi
+    depends_on:
+        - basket.db
+    environment:
+        - "CacheSettings:ConnectionString=basket.db:6379"
+    build:
+      context: .
+      dockerfile: Services\Basket\Basket.API\Dockerfile
+    ports:
+      - "6001:80"
+volumes:
+  portainer_data:
