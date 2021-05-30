@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64.exe convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: catalog-api
+  name: catalog-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: catalog-api
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose-windows-amd64.exe convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: catalog-api
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIORNMENT
+          value: Development
+        - name: DatabaseSettings:ConnectionString
+          value: mongodb://catalog.db:27017
+        image: catalog-api
+        imagePullPolicy: ""
+        name: catalogapi
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
