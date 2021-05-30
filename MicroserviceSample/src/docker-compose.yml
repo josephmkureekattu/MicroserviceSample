@@ -12,12 +12,15 @@ services:
   basket.db:
     container_name: shopping-redis
     restart: always
-    image: redis:alpine
+    image: redis:latest
     volumes:
         - C:\dockerimagedata\redis:/data
         - C:\dockerimagedata\redis:/usr/local/etc/redis/redis.conf
-  agent:
-    image: portainer/agent
+  portainer:
+    image: portainer/portainer-ce
+    ports:
+      - "9000:9000"
+      - "5011:8000"
     volumes:
       - type: npipe
         source: \\.\pipe\docker_engine
@@ -25,17 +28,6 @@ services:
       - type: bind
         source: C:\dockerimagedata\portainer
         target: C:\dockerimagedata\portainer
-    deploy:
-      mode: global
-      placement:
-        constraints: [node.platform.os == windows]
-  portainer:
-    image: portainer/portainer-ce
-    ports:
-      - "9000:9000"
-      - "5011:8000"
-    volumes:
-      - portainer_data:C:\data
     deploy:
       mode: replicated
       replicas: 1
