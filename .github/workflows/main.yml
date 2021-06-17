@@ -36,7 +36,6 @@ jobs:
 
           echo VERSION=$VERSION
           docker-compose build -f MicroserviceSample/src/docker-compose.yml
-          docker-compose push -f MicroserviceSample/src/docker-compose.yml
 
           # tag and push versions X.X and X and latest
           if echo "$VERSION" | grep -qE '^\w+\.\w+\.\w+$' && [ "$LATEST_TAG" == "$VERSION" ]; then
@@ -47,6 +46,7 @@ jobs:
               docker-compose push
             done
           fi
+      - run: docker-compose push -f MicroserviceSample/src/docker-compose.yml
   test:
     runs-on: ubuntu-latest
     steps:
