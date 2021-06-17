@@ -36,8 +36,8 @@ jobs:
           [ "$VERSION" == "master" ] && export VERSION=dev
 
           echo VERSION=$VERSION
-          docker-compose build
-          docker-compose push
+          docker-compose build -f MicroserviceSample/src/docker-compose.yml
+          docker-compose push -f MicroserviceSample/src/docker-compose.yml
 
           # tag and push versions X.X and X and latest
           if echo "$VERSION" | grep -qE '^\w+\.\w+\.\w+$' && [ "$LATEST_TAG" == "$VERSION" ]; then
