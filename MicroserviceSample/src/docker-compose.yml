@@ -7,7 +7,7 @@ services:
     ports:
         - "27017:27017"
     volumes:
-        - C:\dockerimagedata\catalogmongo:/data/db
+        - catalogdbvol:/data/db
     image: mongo
   basket-db:
     container_name: shoppingredis
@@ -121,3 +121,4 @@ services:
       - "6004:80"
 volumes:
   portainer_data:
+  catalogdbvol: C:\dockerimagedata\catalogmongo
