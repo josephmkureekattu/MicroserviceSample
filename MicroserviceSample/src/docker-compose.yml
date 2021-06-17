@@ -120,5 +120,4 @@ services:
     ports:
       - "6004:80"
 volumes:
-  portainer_data:
-  catalogdbvol: C:\dockerimagedata\catalogmongo
+  catalogdbvol: "C:\dockerimagedata\catalogmongo"
