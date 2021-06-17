@@ -15,7 +15,7 @@ services:
     image: redis:latest
     volumes:
         - C:\dockerimagedata\redis:/data
-        - C:\dockerimagedata\redis:/usr/local/etc/redis/redis.conf
+        - C:\dockerimagedata\redisconf:/usr/local/etc/redis/redis.conf
   discount-db:
     container_name: discountdb
     image: postgres
