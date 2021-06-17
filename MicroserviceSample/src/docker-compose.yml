@@ -14,8 +14,8 @@ services:
     restart: always
     image: redis:latest
     volumes:
-        - C:\dockerimagedata\redis:/data
-        - C:\dockerimagedata\redisconf:/usr/local/etc/redis/redis.conf
+        - redis-data:/data
+        - redis-conf-data:/usr/local/etc/redis/redis.conf
   discount-db:
     container_name: discountdb
     image: postgres
@@ -123,3 +123,5 @@ volumes:
   mongo_data:
   portainer_data:
   postgres_data:
+  redis-data:
+  redis-conf-data:
