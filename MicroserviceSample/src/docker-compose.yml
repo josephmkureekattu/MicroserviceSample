@@ -70,7 +70,7 @@ services:
         - catalog-db
     build:
       context: .
-      dockerfile: Services\Catalog\Catalog.API\Dockerfile
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
     ports:
       - "6001:80"
   basket-api:
