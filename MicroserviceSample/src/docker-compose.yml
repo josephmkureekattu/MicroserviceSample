@@ -119,4 +119,3 @@ services:
       dockerfile: Services\Discount\Discount.Grpc\Dockerfile
     ports:
       - "6004:80"
-volumes:
