@@ -7,7 +7,7 @@ services:
     ports:
         - "27017:27017"
     volumes:
-        - C:\dockerimagedata\catalogmongo:/data/db
+        - mongo_data:/data/db
     image: mongo
   basket-db:
     container_name: shoppingredis
@@ -27,7 +27,7 @@ services:
     ports:
         - "5432:5432"
     volumes:
-        - C:\dockerimagedata\discountpostgree:/var/lib/postgresql/data
+        - postgres_data:/var/lib/postgresql/data
   order-db:
     container_name: orderdb
     image: mcr.microsoft.com/mssql/server:2017-latest
@@ -53,7 +53,7 @@ services:
       - "5011:8000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - C:\dockerimagedata\portainer:/data portainer/portainer-ce
+      - portainer_data:/data portainer/portainer-ce
     deploy:
       mode: replicated
       replicas: 1
@@ -119,3 +119,7 @@ services:
       dockerfile: Services\Discount\Discount.Grpc\Dockerfile
     ports:
       - "6004:80"
+volumes:
+  mongo_data:
+  portainer_data:
+  postgres_data:
