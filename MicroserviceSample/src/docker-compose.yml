@@ -76,7 +76,7 @@ services:
       - "6001:80"
   basket-api:
     container_name: basketapi
-    image: ${DOCKER_REGISTRY-}basketapi
+    image: josephm101/basketapi
     depends_on:
         - basket-db
         - discount-grpc-api
@@ -90,7 +90,7 @@ services:
       - "6002:80"
   discount-api:
     container_name: discountapi
-    image: ${DOCKER_REGISTRY-}discountapi
+    image: josephm101/discountapi
     environment: 
         - ASPNETCORE_ENVIORNMENT=Development
         - "DatabaseSettings:ConnectionString=Server=discount-db;Port=5432;Database=DiscountDb;User Id=admin;Password=samplepass;"
@@ -107,7 +107,7 @@ services:
       - "6003:80"
   discount-grpc-api:
     container_name: discountgrpcapi
-    image: ${DOCKER_REGISTRY-}discountgrpcapi
+    image: josephm101/discountgrpcapi
     environment: 
         - ASPNETCORE_ENVIORNMENT=Development
         - "DatabaseSettings:ConnectionString=Server=discount-db;Port=5432;Database=DiscountDb;User Id=admin;Password=samplepass;"
