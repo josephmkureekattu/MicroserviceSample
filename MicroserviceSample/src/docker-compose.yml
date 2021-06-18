@@ -63,7 +63,7 @@ services:
           - node.platform.os == linux  
   catalog-api:
     container_name: catalogapi
-    image: ${DOCKER_REGISTRY-}catalogapi
+    image: josephm101/catalogapi
     environment: 
         - ASPNETCORE_ENVIORNMENT=Development
         - "DatabaseSettings:ConnectionString=mongodb://catalog-db:27017"
