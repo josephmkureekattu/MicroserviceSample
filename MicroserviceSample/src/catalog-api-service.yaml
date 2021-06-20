@@ -16,6 +16,8 @@ spec:
     protocol: TCP
     name: http
   selector:
-    io.kompose.service: catalog-api  
+    io.kompose.service: catalog-api
+  externalIPs:
+  - 172.25.80.197
 status:
   loadBalancer: {}

@@ -13,7 +13,11 @@ spec:
   ports:
   - port: 6002
     targetPort: 80
+    protocol: TCP
+    name: http
   selector:
     io.kompose.service: basket-api
+  externalIPs:
+  - 172.25.80.197
 status:
   loadBalancer: {}

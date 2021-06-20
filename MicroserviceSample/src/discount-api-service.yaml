@@ -14,7 +14,11 @@ spec:
   - name: "6003"
     port: 6003
     targetPort: 80
+    protocol: TCP
+    name: http
   selector:
     io.kompose.service: discount-api
+  externalIPs:
+  - 172.25.80.197
 status:
   loadBalancer: {}
