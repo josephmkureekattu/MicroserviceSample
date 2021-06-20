@@ -5,10 +5,9 @@ metadata:
     labels:
         app: "samplemicroservicescluster-2aea"
 spec:
-    type: NodePort
+    type: LoadBalancer
     ports:
-    - nodePort: 32410
-      port: 80
+    - port: 80
       targetPort: 80
       protocol: TCP
       name: http
