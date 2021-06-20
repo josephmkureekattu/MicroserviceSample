@@ -9,6 +9,7 @@ metadata:
     io.kompose.service: discount-api
   name: discount-api
 spec:
+  type: LoadBalancer
   ports:
   - name: "6003"
     port: 6003

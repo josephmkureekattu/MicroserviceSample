@@ -26,11 +26,10 @@ spec:
       containers:
       - env:
         - name: ACCEPT_EULA
-          value: Y
+          value: "Y"
         - name: SA_PASSWORD
           value: Password@123
         image: mcr.microsoft.com/mssql/server:2017-latest
-        imagePullPolicy: ""
         name: orderdb
         ports:
         - containerPort: 1433

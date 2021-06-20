@@ -11,8 +11,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - name: "6002"
-    port: 6002
+  - port: 6002
     targetPort: 80
   selector:
     io.kompose.service: basket-api
