@@ -5,9 +5,10 @@ metadata:
     labels:
         app: "samplemicroservicescluster-2aea"
 spec:
-    type: ClusterIP
+    type: NodePort
     ports:
-    - port: 80
+    - nodePort: 32410
+      port: 80
       targetPort: 80
       protocol: TCP
       name: http
