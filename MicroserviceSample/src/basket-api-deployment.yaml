@@ -24,10 +24,11 @@ spec:
         io.kompose.service: basket-api
     spec:
       containers:
-      - env:
-        - name: CacheSettings.ConnectionString
-          value: basket-db:6379
-        - name: GrpcSettings.DiscountUrl
+      - name: basket-api-cnt
+        env:
+        - name: CacheSettings__ConnectionString
+          value: "basket-db:6379"
+        - name: GrpcSettings__DiscountUrl
           value: http://discount-grpc-api
         image: josephm101/basketapi
         imagePullPolicy: ""

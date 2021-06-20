@@ -27,7 +27,7 @@ spec:
       - env:
         - name: ASPNETCORE_ENVIORNMENT
           value: Development
-        - name: DatabaseSettings.ConnectionString
+        - name: DatabaseSettings__ConnectionString
           value: mongodb://catalog-db:27017
         image: josephm101/catalogapi
         imagePullPolicy: ""
@@ -35,7 +35,13 @@ spec:
         ports:
         - containerPort: 80
         resources: {}
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-data-path
       restartPolicy: Always
       serviceAccountName: ""
-      volumes: null
+      volumes:
+      - name: mongo-data-path
+        persistentVolumeClaim:
+          claimName: mongo-data
 status: {}

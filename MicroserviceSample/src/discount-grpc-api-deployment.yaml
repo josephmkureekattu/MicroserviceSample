@@ -27,7 +27,7 @@ spec:
       - env:
         - name: ASPNETCORE_ENVIORNMENT
           value: Development
-        - name: DatabaseSettings.ConnectionString
+        - name: DatabaseSettings__ConnectionString
           value: Server=discount-db;Port=5432;Database=DiscountDb;User Id=admin;Password=samplepass;
         - name: WAIT_HOSTS
           value: discountdb:5432
