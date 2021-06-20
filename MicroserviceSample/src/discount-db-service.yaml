@@ -6,16 +6,14 @@ metadata:
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
-    io.kompose.service: catalog-api
-  name: catalog-api
+    io.kompose.service: discount-db
+  name: discount-db
 spec:
-  type: LoadBalancer
   ports:
-  - port: 6001
-    targetPort: 80
-    protocol: TCP
-    name: http
+  - name: "5432"
+    port: 5432
+    targetPort: 5432
   selector:
-    io.kompose.service: catalog-api  
+    io.kompose.service: discount-db
 status:
   loadBalancer: {}

@@ -25,9 +25,11 @@ spec:
     spec:
       containers:
       - env:
-        - name: CacheSettings:ConnectionString
-          value: basket.db:6379
-        image: basket-api
+        - name: CacheSettings.ConnectionString
+          value: basket-db:6379
+        - name: GrpcSettings.DiscountUrl
+          value: http://discount-grpc-api
+        image: josephm101/basketapi
         imagePullPolicy: ""
         name: basketapi
         ports:

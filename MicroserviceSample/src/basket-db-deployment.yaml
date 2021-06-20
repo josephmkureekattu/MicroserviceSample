@@ -13,7 +13,8 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: basket-db
-  strategy: {}
+  strategy:
+    type: Recreate
   template:
     metadata:
       annotations:
@@ -26,9 +27,20 @@ spec:
       containers:
       - image: redis:latest
         imagePullPolicy: ""
-        name: shopping-redis
+        name: shoppingredis
         resources: {}
+        volumeMounts:
+        - mountPath: /data
+          name: redis-data
+        - mountPath: /usr/local/etc/redis/redis.conf
+          name: redis-conf-data
       restartPolicy: Always
       serviceAccountName: ""
-      volumes: null
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: redis-data
+      - name: redis-conf-data
+        persistentVolumeClaim:
+          claimName: redis-conf-data
 status: {}

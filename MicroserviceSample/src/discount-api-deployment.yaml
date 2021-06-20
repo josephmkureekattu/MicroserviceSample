@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
-    io.kompose.service: catalog-api
-  name: catalog-api
+    io.kompose.service: discount-api
+  name: discount-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: catalog-api
+      io.kompose.service: discount-api
   strategy: {}
   template:
     metadata:
@@ -21,17 +21,25 @@ spec:
         kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
-        io.kompose.service: catalog-api
+        io.kompose.service: discount-api
     spec:
       containers:
       - env:
         - name: ASPNETCORE_ENVIORNMENT
           value: Development
-        - name: DatabaseSettings.ConnectionString
-          value: mongodb://catalog-db:27017
-        image: josephm101/catalogapi
+        - name: DatabaseSettings:ConnectionString
+          value: Server=discount-db;Port=5432;Database=DiscountDb;User Id=admin;Password=samplepass;
+        - name: WAIT_HOSTS
+          value: discountdb:5432
+        - name: WAIT_HOSTS_TIMEOUT
+          value: "300"
+        - name: WAIT_HOST_CONNECT_TIMEOUT
+          value: "30"
+        - name: WAIT_SLEEP_INTERVAL
+          value: "30"
+        image: josephm101/discountapi
         imagePullPolicy: ""
-        name: catalogapi
+        name: discountapi
         ports:
         - containerPort: 80
         resources: {}
