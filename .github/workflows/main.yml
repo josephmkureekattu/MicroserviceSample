@@ -1,0 +1,58 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+      DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
+      DOCKER_HUB_PASS: ${{ secrets.DOCKER_HUB_PASS }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest   
+    
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - run: echo $DOCKER_HUB_PASS | docker login docker.io -u $DOCKER_HUB_USER --password-stdin
+      - run: |
+          export VERSION=${{ matrix.ref }}
+          [ "$VERSION" == "master" ] && export VERSION=dev
+
+          echo VERSION=$VERSION
+          docker-compose build -f MicroserviceSample/src/docker-compose.yml
+
+          # tag and push versions X.X and X and latest
+          if echo "$VERSION" | grep -qE '^\w+\.\w+\.\w+$' && [ "$LATEST_TAG" == "$VERSION" ]; then
+            for VERSION in $(echo $VERSION | cut -d. -f1,2) $(echo $VERSION | cut -d. -f1) latest; do
+              export VERSION
+              echo VERSION=$VERSION
+              docker-compose build
+              docker-compose push
+            done
+          fi
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2      
+      - run: echo $DOCKER_HUB_PASS | docker login docker.io -u $DOCKER_HUB_USER --password-stdin      
+      - run: |
+          docker-compose --file MicroserviceSample/src/docker-compose.yml build
+          #docker-compose --file MicroserviceSample/src/docker-compose.yml run sut      
+      - run: docker-compose --file MicroserviceSample/src/docker-compose.yml push
+      

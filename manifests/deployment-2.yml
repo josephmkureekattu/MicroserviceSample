@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "samplemicroservicescluster-2aea"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "samplemicroservicescluster-2aea"
+  template:
+    metadata:
+      labels:
+        app: "samplemicroservicescluster-2aea"
+    spec:
+      containers:
+        - name: "samplemicroservicescluster-2aea"
+          image: "samplecontreg20062021.azurecr.io/samplemicroservicescluster"
+          ports:
+          - containerPort: 80

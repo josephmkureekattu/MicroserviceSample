@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: "samplemicroservicescluster-2aea"
+    labels:
+        app: "samplemicroservicescluster-2aea"
+    annotations:
+        kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+    rules:
+        - host: samplemicroservicesclusterab76-samplemicroservicescluster-2aea.9b2567cab79e474ca119.eastus.aksapp.io
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: "samplemicroservicescluster-2aea"
+                servicePort: 80

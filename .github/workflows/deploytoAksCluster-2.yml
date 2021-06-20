@@ -1,0 +1,51 @@
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: samplecontreg20062021.azurecr.io
+        username: ${{ secrets.acr_samplecontreg20062021_username }}
+        password: ${{ secrets.acr_samplecontreg20062021_password }}
+    
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/MicroserviceSample/src" -f  "MicroserviceSample/src/Services/Catalog/Catalog.API/Dockerfile" -t samplecontreg20062021.azurecr.io/samplemicroservicescluster:${{ github.sha }} --label dockerfile-path=MicroserviceSample/src/Services/Catalog/Catalog.API/Dockerfile
+        docker push samplecontreg20062021.azurecr.io/samplemicroservicescluster:${{ github.sha }}
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_samplemicroservicescluster_kubeConfig }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep samplemicroservicesclusterab76 | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace samplemicroservicesclusterab76`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: samplemicroservicesclusterab76
+        container-registry-url: samplecontreg20062021.azurecr.io
+        container-registry-username: ${{ secrets.acr_samplecontreg20062021_username }}
+        container-registry-password: ${{ secrets.acr_samplecontreg20062021_password }}
+        secret-name: samplemicrosdockerauth
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: samplemicroservicesclusterab76
+        manifests: |
+          manifests/deployment-2.yml
+          manifests/service-2.yml
+          manifests/ingress.yml
+        images: |
+          samplecontreg20062021.azurecr.io/samplemicroservicescluster:${{ github.sha }}
+        imagepullsecrets: |
+          samplemicrosdockerauth
