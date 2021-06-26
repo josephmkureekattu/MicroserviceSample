@@ -41,7 +41,7 @@ spec:
         imagePullPolicy: ""
         name: discountgrpcapi
         ports:
-        - containerPort: 80
+        - containerPort: 50051
         resources: {}
       restartPolicy: Always
       serviceAccountName: ""

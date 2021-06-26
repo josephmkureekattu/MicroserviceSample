@@ -35,13 +35,7 @@ spec:
         ports:
         - containerPort: 80
         resources: {}
-        volumeMounts:
-        - mountPath: /data/db
-          name: mongo-data-path
       restartPolicy: Always
       serviceAccountName: ""
-      volumes:
-      - name: mongo-data-path
-        persistentVolumeClaim:
-          claimName: mongo-data
+      volumes: null
 status: {}

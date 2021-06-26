@@ -121,7 +121,7 @@ services:
       context: .
       dockerfile: Services/Discount/Discount.Grpc/Dockerfile
     ports:
-      - "6004:80"
+      - "6004:50051"
 volumes:
   mongo_data:
   portainer_data:

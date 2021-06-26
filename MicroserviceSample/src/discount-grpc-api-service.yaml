@@ -13,12 +13,12 @@ spec:
   ports:
   - name: "6004"
     port: 6004
-    targetPort: 80
+    targetPort: 50051
     protocol: TCP
     name: http
   selector:
     io.kompose.service: discount-grpc-api
   externalIPs:
-  - 172.25.80.197
+  - 172.30.160.73
 status:
   loadBalancer: {}

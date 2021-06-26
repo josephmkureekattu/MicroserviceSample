@@ -18,6 +18,6 @@ spec:
   selector:
     io.kompose.service: basket-api
   externalIPs:
-  - 172.25.80.197
+  - 172.30.160.73
 status:
   loadBalancer: {}
