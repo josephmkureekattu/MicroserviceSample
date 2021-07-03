@@ -9,15 +9,12 @@ metadata:
     io.kompose.service: basket-api
   name: basket-api
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
-  - port: 6002
+  - port: 80
     targetPort: 80
+    nodePort: 30036
     protocol: TCP
     name: http
   selector:
     io.kompose.service: basket-api
-  externalIPs:
-  - 172.30.160.73
-status:
-  loadBalancer: {}

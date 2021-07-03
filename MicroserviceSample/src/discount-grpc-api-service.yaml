@@ -13,7 +13,7 @@ spec:
   ports:
   - name: "6004"
     port: 6004
-    targetPort: 50051
+    targetPort: 80
     protocol: TCP
     name: http
   selector:
